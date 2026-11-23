@@ -360,22 +360,17 @@ function buildTopRow(finalFeedEl, dexEl, forexEl) {
 }
 
 function buildLayout(finalFeedEl, dexEl, forexEl, cexEl) {
-  // On wide screens (>1200px): DEX | FOREX on the left, FINAL FEED on the right
-  // On narrow screens: stack vertically
+  // DEX, FOREX, and FINAL FEED stacked above CEX on all screen sizes;
+  // the three tables sit side by side on wide screens and wrap below.
+  const top = document.createElement("div");
+  top.className = "top-row";
+  if (finalFeedEl) top.appendChild(finalFeedEl);
+  if (dexEl) top.appendChild(dexEl);
+  if (forexEl) top.appendChild(forexEl);
+
   const container = document.createElement("div");
   container.className = "layout-container";
-
-  const mainCol = document.createElement("div");
-  mainCol.className = "main-col";
-  if (dexEl) mainCol.appendChild(dexEl);
-  if (forexEl) mainCol.appendChild(forexEl);
-
-  const sideCol = document.createElement("div");
-  sideCol.className = "side-col";
-  if (finalFeedEl) sideCol.appendChild(finalFeedEl);
-
-  container.appendChild(mainCol);
-  container.appendChild(sideCol);
+  container.appendChild(top);
 
   // CEX below everything
   if (cexEl) {

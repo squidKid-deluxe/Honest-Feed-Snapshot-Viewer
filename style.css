@@ -371,37 +371,29 @@ header code {
   overflow-y: hidden;
 }
 
-/* ---------- layout: FINAL FEED beside DEX+FOREX on wide screens ---------- */
+/* ---------- layout: DEX + FOREX + FINAL FEED above CEX ---------- */
 
 .layout-container {
   display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.top-row {
+  display: flex;
   gap: 16px;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
-.main-col {
-  flex: 1;
+.top-row > .section {
+  flex: 1 1 260px;
   min-width: 0;
-}
-
-.side-col {
-  flex: 0 0 auto;
-  width: 280px;
 }
 
 /* CEX section below */
 .layout-container > .section {
-  flex-basis: 100%;
-}
-
-@media (max-width: 1100px) {
-  .layout-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .side-col {
-    width: 100%;
-  }
+  width: 100%;
 }
 
 .table-wrap > table {
@@ -448,14 +440,14 @@ header code {
 .table-wrap > table th.cell-cyan { color: #8cf; }
 .table-wrap > table th.cell-white { color: #fff; }
 .table-wrap > table th.cell-purple { color: #c9f; }
-.table-wrap > table th.cell-dim { color: #888; }
+.table-wrap > table th.cell-dim { color: #bbb; }
 .table-wrap > table td.cell-green { color: #6f6; }
 .table-wrap > table td.cell-yellow { color: #eeb; }
 .table-wrap > table td.cell-red { color: #f88; }
 .table-wrap > table td.cell-cyan { color: #8cf; }
 .table-wrap > table td.cell-white { color: #fff; }
 .table-wrap > table td.cell-purple { color: #c9f; }
-.table-wrap > table td.cell-dim { color: #888; }
+.table-wrap > table td.cell-dim { color: #bbb; }
 
 .missing {
   color: #666;
