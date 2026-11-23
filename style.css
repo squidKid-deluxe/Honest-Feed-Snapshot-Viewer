@@ -381,12 +381,21 @@ header code {
 
 .top-row {
   display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.top-row > .left-col {
+  display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
 }
 
 .top-row > .section {
-  width: 100%;
+  flex: 1 1 260px;
+  min-width: 0;
 }
 
 /* CEX section below */
