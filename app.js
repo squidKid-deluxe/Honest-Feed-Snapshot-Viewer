@@ -281,6 +281,7 @@ async function loadSnapshotAt(sha) {
 
 function renderPublisher(snapshot) {
   const account = snapshot && snapshot.account ? snapshot.account : currentPublisher;
+  const version = snapshot && snapshot.version ? snapshot.version : null;
   const prices = snapshot && snapshot.prices ? snapshot.prices : {};
   const time = prices.time || {};
   const feed = prices.feed || {};
@@ -308,6 +309,7 @@ function renderPublisher(snapshot) {
   if (time.utc) parts.push("utc: " + escapeHtml(time.utc));
   if (time.updates != null) parts.push("updates: " + time.updates);
   if (time.runtime != null) parts.push("runtime: " + time.runtime + "s");
+  if (version) parts.push("version: " + escapeHtml(version));
   if (parts.length) {
     const span = document.createElement("span");
     span.textContent = parts.join("  |  ");
