@@ -1,0 +1,584 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #444 #111;
+}
+
+body {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  margin: 0 auto;
+  padding: 24px 32px;
+  color: #e0e0e0;
+  background: #0c0e12;
+  line-height: 1.5;
+  font-size: 15px;
+  max-width: 90%;
+}
+
+header {
+  max-width: none;
+  width: 100%;
+  margin: 0 0 24px;
+  text-align: center;
+  border-bottom: 1px solid #2a2a2a;
+  padding-bottom: 16px;
+}
+
+header h1 {
+  font-size: 28px;
+  margin: 0 0 8px;
+  color: #8cf;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+header p {
+  margin: 0;
+  color: #999;
+  font-size: 15px;
+}
+
+header a {
+  color: #6af;
+  text-decoration: none;
+}
+
+header a:hover {
+  text-decoration: underline;
+  color: #9cf;
+}
+
+header code {
+  color: #8cf;
+  background: #161a20;
+  padding: 1px 4px;
+  border: 1px solid #2a2a2a;
+  border-radius: 2px;
+}
+
+/* ---------- controls ---------- */
+
+.controls {
+  max-width: none;
+  width: 100%;
+  margin: 0 0 24px;
+  background: #11151a;
+  border: 1px solid #2a2a2a;
+  padding: 18px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.controls > label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6af;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  display: block;
+  width: 100%;
+}
+
+.controls .field {
+  flex: 1 1 220px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+.controls select {
+  padding: 9px 11px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #0a0d12;
+  border: 1px solid #2a2a2a;
+  color: #e0e0e0;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.controls select option {
+  background: #0a0d12;
+  color: #e0e0e0;
+}
+
+/* ---------- custom commit picker ---------- */
+
+.commit-picker {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 420px;
+}
+
+.commit-btn {
+  width: 100%;
+  padding: 9px 11px;
+  font-size: 14px;
+  font-family: inherit;
+  text-align: left;
+  background: #0a0d12;
+  border: 1px solid #2a2a2a;
+  color: #e0e0e0;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.commit-btn:hover {
+  border-color: #6af;
+}
+
+.commit-btn::after {
+  content: " ▾";
+  float: right;
+  font-size: 12px;
+  color: #888;
+}
+
+.commit-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  background: #0a0d12;
+  border: 1px solid #2a2a2a;
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+  z-index: 50;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.commit-list.hidden {
+  display: none;
+}
+
+.commit-list .commit-item {
+  display: block;
+  width: 100%;
+  padding: 8px 11px;
+  font-size: 13px;
+  font-family: inherit;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: #e0e0e0;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.commit-list .commit-item:hover {
+  background: #151a20;
+  color: #8cf;
+}
+
+.commit-list .commit-item.selected {
+  background: #0d1a0d;
+  color: #8cf;
+  font-weight: 700;
+}
+
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.radio-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #e0e0e0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.radio-label input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  inset: 0;
+  margin: 0;
+}
+
+.radio-label span {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid #2a2a2a;
+  border-radius: 999px;
+  background: #0a0d12;
+  color: #e0e0e0;
+  user-select: none;
+}
+
+.radio-label input[type="radio"]:checked ~ span {
+  background: #8cf;
+  color: #000;
+  border-color: #8cf;
+}
+
+.radio-label input[type="radio"]:focus-visible ~ span {
+  outline: 2px solid #8cf;
+  outline-offset: 2px;
+}
+
+.controls button {
+  align-self: flex-end;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 700;
+  border: 1px solid #8cf;
+  background: #0a0d12;
+  color: #8cf;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background: #8cf;
+  color: #000;
+}
+
+.controls button:disabled {
+  opacity: 0.4;
+  border-color: #2a2a2a;
+  color: #555;
+  cursor: not-allowed;
+}
+
+.hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #777;
+  width: 100%;
+}
+
+.hint code {
+  color: #6af;
+}
+
+/* ---------- status ---------- */
+
+.status {
+  max-width: none;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 10px 14px;
+  border: 1px solid #2a2a2a;
+  border-radius: 3px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.status.hidden {
+  display: none;
+}
+
+.status.ok {
+  background: #0d1a0d;
+  border-color: #2a4a2a;
+  color: #8cf;
+}
+
+.status.err {
+  background: #1a0d0d;
+  border-color: #4a2a2a;
+  color: #f66;
+}
+
+/* ---------- output ---------- */
+
+#output {
+  max-width: none;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.publisher-card {
+  background: #0d1014;
+  border: 1px solid #2a2a2a;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  max-width: none;
+  width: 100%;
+}
+
+.publisher-card header {
+  border: none;
+  padding: 0;
+  margin: 0 0 16px;
+  text-align: left;
+  border-bottom: 1px solid #2a2a2a;
+  padding-bottom: 10px;
+}
+
+.publisher-card h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  color: #8cf;
+}
+
+.publisher-card .meta {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}
+
+.publisher-card .stale {
+  color: #f66;
+  font-weight: 700;
+}
+
+.publisher-card .fresh {
+  color: #8cf;
+  font-weight: 700;
+}
+
+/* ---------- terminal tables ---------- */
+
+.section {
+  margin-bottom: 22px;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6af;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.table-wrap {
+  border: 1px solid #2a2a2a;
+  background: #0d1014;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* ---------- layout: FINAL FEED beside DEX+FOREX on wide screens ---------- */
+
+.layout-container {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.main-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.side-col {
+  flex: 0 0 auto;
+  width: 280px;
+}
+
+/* CEX section below */
+.layout-container > .section {
+  flex-basis: 100%;
+}
+
+@media (max-width: 1100px) {
+  .layout-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .side-col {
+    width: 100%;
+  }
+}
+
+.table-wrap > table {
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-family: inherit;
+  background: #0d1014;
+  color: #e0e0e0;
+}
+
+.table-wrap > table th {
+  text-align: left;
+  font-weight: 700;
+  color: #aaa;
+  padding: 6px 10px;
+  border-bottom: 1px solid #2a2a2a;
+  border-top: 1px solid #2a2a2a;
+  background: #151a20;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table-wrap > table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid #151a20;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table-wrap > table tr.pair-header td {
+  font-weight: 700;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+/* terminal color palette (muted, readable) */
+.table-wrap > table th.cell-green { color: #6f6; }
+.table-wrap > table th.cell-yellow { color: #eeb; }
+.table-wrap > table th.cell-red { color: #f88; }
+.table-wrap > table th.cell-cyan { color: #8cf; }
+.table-wrap > table th.cell-white { color: #fff; }
+.table-wrap > table th.cell-purple { color: #c9f; }
+.table-wrap > table th.cell-dim { color: #888; }
+.table-wrap > table td.cell-green { color: #6f6; }
+.table-wrap > table td.cell-yellow { color: #eeb; }
+.table-wrap > table td.cell-red { color: #f88; }
+.table-wrap > table td.cell-cyan { color: #8cf; }
+.table-wrap > table td.cell-white { color: #fff; }
+.table-wrap > table td.cell-purple { color: #c9f; }
+.table-wrap > table td.cell-dim { color: #888; }
+
+.missing {
+  color: #666;
+  font-style: italic;
+}
+
+/* final feed table */
+table.final td.pair {
+  width: 30%;
+}
+table.final td.price {
+  text-align: right;
+  width: 70%;
+}
+
+.empty {
+  font-size: 13px;
+  color: #666;
+  font-style: italic;
+  margin: 8px 0;
+}
+
+footer {
+  max-width: none;
+  width: 100%;
+  margin: 40px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid #2a2a2a;
+  font-size: 12px;
+  color: #777;
+  text-align: center;
+}
+
+footer a {
+  color: #6af;
+  text-decoration: none;
+}
+
+footer code {
+  color: #8cf;
+}
+
+@media (max-width: 900px) {
+  body {
+    padding: 12px 16px;
+    font-size: 14px;
+    max-width: 95%;
+  }
+  .table-wrap > table {
+    font-size: 11px;
+  }
+  .table-wrap > table th,
+  .table-wrap > table td {
+    padding: 4px 6px;
+  }
+  .table-wrap {
+    overflow-x: auto;
+  }
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px;
+  }
+  .controls > label {
+    width: auto;
+    margin-bottom: 4px;
+  }
+  .controls .field {
+    min-width: auto;
+  }
+  .controls button {
+    align-self: flex-start;
+    width: 100%;
+    max-width: 200px;
+  }
+  .radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .radio-label {
+    font-size: 13px;
+  }
+  .publisher-card {
+    padding: 12px 16px;
+  }
+  .section {
+    margin-bottom: 16px;
+  }
+  .table-wrap {
+    font-size: 11px;
+  }
+  .table-wrap > table th,
+  .table-wrap > table td {
+    padding: 4px 6px;
+  }
+  footer {
+    margin: 24px 0 0;
+    padding-top: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  header h1 {
+    font-size: 22px;
+  }
+  .publisher-card h2 {
+    font-size: 17px;
+  }
+  .controls button {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+  .table-wrap > table {
+    font-size: 10px;
+  }
+  .table-wrap > table th,
+  .table-wrap > table td {
+    padding: 3px 5px;
+    white-space: nowrap;
+  }
+}

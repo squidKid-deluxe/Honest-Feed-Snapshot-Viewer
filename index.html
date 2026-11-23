@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HONEST Snapshot Viewer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>HONEST Snapshot Viewer</h1>
+  <p>
+    Feed snapshots from
+    <a href="https://github.com/squidKid-deluxe/HONEST-feeds-live" target="_blank" rel="noopener">
+      squidKid-deluxe/HONEST-feeds-live
+    </a>.
+    Publishers are detected automatically from the repo; snapshots are served
+    straight from <code>raw.githubusercontent.com</code>.
+  </p>
+</header>
+
+<section class="controls">
+  <label>Publisher</label>
+  <div id="publisher-radios" class="radio-group"></div>
+
+  <label>Snapshot (commit)</label>
+  <div id="commit-picker" class="commit-picker">
+    <button type="button" id="commit-btn" class="commit-btn">
+      Select a publisher first
+    </button>
+    <div id="commit-list" class="commit-list hidden"></div>
+  </div>
+
+  <button id="refresh">Refresh publisher list</button>
+  <p class="hint">Pick a publisher, then pick a snapshot. The tables match the <code>render_price_logs.py</code> output: DEX, CEX, FOREX, and the final feed.</p>
+</section>
+
+<section id="status" class="status hidden"></section>
+
+<section id="output"></section>
+
+<footer>
+  Snapshots whose <code>prices.time.unix</code> is more than 7200 seconds old are treated as stale.
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
