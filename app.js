@@ -364,9 +364,9 @@ function buildLayout(finalFeedEl, dexEl, forexEl, cexEl) {
   // the three tables sit side by side on wide screens and wrap below.
   const top = document.createElement("div");
   top.className = "top-row";
-  if (finalFeedEl) top.appendChild(finalFeedEl);
   if (dexEl) top.appendChild(dexEl);
   if (forexEl) top.appendChild(forexEl);
+  if (finalFeedEl) top.appendChild(finalFeedEl);
 
   const container = document.createElement("div");
   container.className = "layout-container";
